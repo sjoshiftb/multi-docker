@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t sjoshiftb/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true sjoshiftb/react-test -f npm test
+
+after_success:
+    - docker build -t sjoshiftb/multi-client ./client
+    - docker build -t sjoshiftb/multi-nginx ./nginx
+    - docker build -t sjoshiftb/multi-server ./server
+    - docker build -t sjoshiftb/multi-worker ./worker
