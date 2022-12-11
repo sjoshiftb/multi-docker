@@ -14,3 +14,8 @@ after_success:
     - docker build -t sjoshiftb/multi-nginx ./nginx
     - docker build -t sjoshiftb/multi-server ./server
     - docker build -t sjoshiftb/multi-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push sjoshiftb/multi-client
+    - docker push sjoshiftb/multi-nginx
+    - docker push sjoshiftb/multi-server
+    - docker push sjoshiftb/multi-worker
